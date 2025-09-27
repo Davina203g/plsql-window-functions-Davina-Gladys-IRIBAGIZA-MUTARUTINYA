@@ -2,17 +2,14 @@ SELECT
  region,
  sale_month,
  monthly_sales,
- -- Previous month sales using LAG()
  LAG(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
  ) as prev_month_sales,
- -- Next month sales using LEAD() for forecasting
  LEAD(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
  ) as next_month_sales,
- -- Month-over-month growth percentage
  ROUND(
  ((monthly_sales - LAG(monthly_sales, 1) OVER (
  PARTITION BY region
@@ -23,7 +20,6 @@ SELECT
  ORDER BY sale_month
  ), 0), 2
  ) as mom_growth_percent,
- -- Growth trend indicator
  CASE
  WHEN monthly_sales > LAG(monthly_sales, 1) OVER (
  PARTITION BY region ORDER BY sale_month
