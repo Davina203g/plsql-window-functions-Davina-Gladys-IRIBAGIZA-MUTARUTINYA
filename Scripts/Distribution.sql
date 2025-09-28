@@ -34,7 +34,8 @@ FROM (
  HAVING COUNT(t.transaction_id) >= 2 
 ) customer_summary
 ORDER BY total_spent DESC;
---INTERPRETATION:
---This query transforms raw transaction data into actionable customer intelligence 
---by segmenting customers into four value-based tiers(VIP,High Value, Medium Value, Basic Customers) 
---and assign targeted marketing strategies for each group respectively.
+--INTERPRITATION:
+-- The query groups customers into four quartiles. 
+--The top 25% are the VIP customers(cleients) and bring in the majority of revenue to the business, as for the bottom 25% are casual buyers. 
+--Linking each quartile with a marketing strategy helps the business to personalize its approach. 
+--For example, VIP customers might get exclusive offers, while casual customers might be attracted with promotions to encourage more purchases.
