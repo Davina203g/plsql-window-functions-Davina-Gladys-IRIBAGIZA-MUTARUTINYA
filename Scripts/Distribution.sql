@@ -4,7 +4,9 @@ SELECT
  total_spent,
  transaction_count,
  avg_transaction_value,
+ -- NTILE(4): Divide customers into 4 equal groups basing on the total spending
  NTILE(4) OVER (ORDER BY total_spent DESC) as customer_quartile,
+ -- CUME_DIST(): Calculate percentage of cumulative distribution 
  ROUND(CUME_DIST() OVER (ORDER BY total_spent DESC) * 100, 2) as cumulative_percentile,
  CASE 
  WHEN NTILE(4) OVER (ORDER BY total_spent DESC) = 1 THEN 'VIP Customers (Top 25%)'
@@ -32,3 +34,7 @@ FROM (
  HAVING COUNT(t.transaction_id) >= 2 
 ) customer_summary
 ORDER BY total_spent DESC;
+--INTERPRETATION:
+--This query transforms raw transaction data into actionable customer intelligence 
+--by segmenting customers into four value-based tiers(VIP,High Value, Medium Value, Basic Customers) 
+--and assign targeted marketing strategies for each group respectively.
