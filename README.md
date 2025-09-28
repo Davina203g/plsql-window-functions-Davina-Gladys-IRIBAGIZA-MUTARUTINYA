@@ -159,7 +159,6 @@ FROM (
  GROUP BY c.region, EXTRACT(MONTH FROM sale_date)
 ) region_monthly_sales
 ORDER BY region, sale_month;
-
 -- Interpretation:
 -- LAG() and LEAD() are used for comparing sales month to month. The percentage growth column shows whether a region is growing or declining. For example, if Muhanga shows 8% growth for three months that follow each other, that is a sign the market is expanding there.
 
