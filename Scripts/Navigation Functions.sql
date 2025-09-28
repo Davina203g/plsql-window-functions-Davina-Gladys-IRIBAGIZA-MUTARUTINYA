@@ -44,8 +44,6 @@ FROM (
 ORDER BY region, sale_month;
 
 -- Interpretation:
--- 1. Identify seasonal patterns and regional growth patterns
--- 2. Forecast inventory needs based on growth paths  
--- 3. Allocate marketing resources to regions with higher growth
--- 4. Detect early signs of regions declining 
--- 5. Compare regional performance and company's averages
+-- LAG() and LEAD() are used for comparing sales month to month. 
+--The percentage growth column shows whether a region is growing or declining. 
+--For example, if Muhanga shows 8% growth for three months that follow each other, that is a sign the market is expanding there.
