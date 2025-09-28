@@ -30,7 +30,6 @@ FROM (
 WHERE sales_rank <= 5
 ORDER BY region, sales_rank;
 -- INTERPRETATION:
--- 1. Shows which fruits sell best and where
--- 2. Helps optimize inventory allocation across regions.
--- 3. The ranking functions show many ways which can be used to compare performance.
--- 4. RANK() function is used for filtering. 
+--This query shows which fruits sell best in each region. 
+--For example, if avocados in Kigali keep being ranked at the top, it means the business should have there more avocados. 
+--RANK(), DENSE_RANK(), and ROW_NUMBER() just give a bit different perspectives on how products compare.
