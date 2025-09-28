@@ -43,10 +43,14 @@ FROM (
         p.name as product_name,
         SUM(t.total_amount) as total_sales,
         SUM(t.quantity) as total_quantity,
+        -- ROW_NUMBER: Sequential ranking with no ties.
         ROW_NUMBER() OVER (PARTITION BY c.region ORDER BY SUM(t.total_amount) DESC) as row_number_rank,
+         -- RANK: Ranking with gaps for ties if two products have same sales, they get same rank then skips next rank.
         RANK() OVER (PARTITION BY c.region ORDER BY SUM(t.total_amount) DESC) as sales_rank,
+        -- DENSE_RANK: Ranking with no gaps for ties if two products have same sales, they get same rank, next rank continues sequently wit no skipping
         DENSE_RANK() OVER (PARTITION BY c.region ORDER BY SUM(t.total_amount) DESC) as dense_sales_rank,
-        PERCENT_RANK() OVER (PARTITION BY c.region ORDER BY SUM(t.total_amount) DESC) as percent_rank
+        -- PERCENT_RANK: Percentage relative standing 0 = lowest sales, 1 = highest sales in a region.
+        PERCENT_RANK() OVER (PARTITION BY c.region ORDER BY SUM(t.total_amount) DESC) as percent_rank 
     FROM transactions t
     JOIN products p ON t.product_id = p.product_id
     JOIN customers c ON t.customer_id = c.customer_id
@@ -55,19 +59,28 @@ FROM (
 )
 WHERE sales_rank <= 5
 ORDER BY region, sales_rank;
+-- INTERPRETATION:
+-- 1. Shows which fruits sell best and where
+-- 2. Helps optimize inventory allocation across regions.
+-- 3. The ranking functions show many ways which can be used to compare performance.
+-- 4. RANK() function is used for filtering. 
 
 2. Aggregate Functions:
-   SELECT
+SELECT
     sale_year,
     sale_month,
     monthly_sales,
+    -- RUNNING TOTAL: Tracks performance and overall growth path for each year
     SUM(monthly_sales) OVER (
         PARTITION BY sale_year ORDER BY sale_month ROWS UNBOUNDED PRECEDING
     ) as running_total,
+    --3-MONTH MOVING AVERAGE: Provides trend direction
     AVG(monthly_sales) OVER (
         ORDER BY sale_year, sale_month ROWS 2 PRECEDING
     ) as moving_avg_3month,
+    -- 3-MONTH MAXIMUM: Shows the highest sales in the recent 3 months
     MAX(monthly_sales) OVER (ORDER BY sale_year, sale_month ROWS 2 PRECEDING) as max_3month,
+    -- 3-MONTH MINIMUM: Shows the lowest sales in the recent 3 months
     MIN(monthly_sales) OVER (ORDER BY sale_year, sale_month ROWS 2 PRECEDING) as min_3month
 FROM (
     SELECT
@@ -78,16 +91,21 @@ FROM (
     WHERE sale_date >= DATE '2024-01-01'
     GROUP BY EXTRACT(YEAR FROM sale_date), EXTRACT(MONTH FROM sale_date))
 ORDER BY sale_year, sale_month;
+--INTERPRETATION:
+--The functions help to create an understandable view of sales performance through multiple time-based perspectives,
+--which influences decison making 
 
 3. Navigation functions:
-   SELECT
+SELECT
  region,
  sale_month,
  monthly_sales,
+ -- LAG: Access the data of the sales of the previous month for comparing
  LAG(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
  ) as prev_month_sales,
+ -- LEAD: Access the data of the sales of the next month for forecasting
  LEAD(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
@@ -123,14 +141,23 @@ FROM (
 ) region_monthly_sales
 ORDER BY region, sale_month;
 
+-- Interpretation:
+-- 1. Identify seasonal patterns and regional growth patterns
+-- 2. Forecast inventory needs based on growth paths  
+-- 3. Allocate marketing resources to regions with higher growth
+-- 4. Detect early signs of regions declining 
+-- 5. Compare regional performance and company's averages
+
 4. Distribution functions:
-   SELECT
+SELECT
  name as customer_name,
  region,
  total_spent,
  transaction_count,
  avg_transaction_value,
+ -- NTILE(4): Divide customers into 4 equal groups basing on the total spending
  NTILE(4) OVER (ORDER BY total_spent DESC) as customer_quartile,
+ -- CUME_DIST(): Calculate percentage of cumulative distribution 
  ROUND(CUME_DIST() OVER (ORDER BY total_spent DESC) * 100, 2) as cumulative_percentile,
  CASE 
  WHEN NTILE(4) OVER (ORDER BY total_spent DESC) = 1 THEN 'VIP Customers (Top 25%)'
@@ -158,6 +185,10 @@ FROM (
  HAVING COUNT(t.transaction_id) >= 2 
 ) customer_summary
 ORDER BY total_spent DESC;
+--INTERPRETATION:
+--This query transforms raw transaction data into actionable customer intelligence 
+--by segmenting customers into four value-based tiers(VIP,High Value, Medium Value, Basic Customers) 
+--and assign targeted marketing strategies for each group respectively.
 
 
 Results Analysis:
