@@ -23,7 +23,7 @@ Identify highest selling fruit in each region for each quarter to optmise invent
    Calculating rolling 3-month average sales by region to smoothen Seasonal fluctuation and identify underlying trends for inventory planning.
 
 Databse schema:
-
+<img width="486" height="1080" alt="image" src="https://github.com/user-attachments/assets/2c54a958-a4e9-43c4-ba2a-57b13b46c0a6" />
 
 Relationships: 
 Customers - Transactions 1:M -> 1 customer can make many transactions.
