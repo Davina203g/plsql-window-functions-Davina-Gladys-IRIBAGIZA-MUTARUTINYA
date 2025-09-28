@@ -26,6 +26,14 @@ Databse schema:
 
 
 
+
+
+
+
+
+
+    
+
 Functions' queries:
 1. Ranking functions:
    SELECT
@@ -193,10 +201,73 @@ ORDER BY total_spent DESC;
 
 Results Analysis:
 
+1. Descriptive Analysis
+
+Patterns:
+- Avocados keep being selled at a higher level than othe fruits in Kigali across all quarters.
+- Mangoes are also the most selled in Huye throughout the year.
+- VIP customers are the ones who keep generating the majority of revenue. 
+- Customers in urban areas show prefer premium fruits.
+- Constant customers are likely to buy sme fruits always.
+
+Trends:
+- Month-over-month sales in Muhanga show 8% in the growth path.
+- Customers increase with expanding markets.
+- Average transaction level rising in Kigali and Muhanga regions.
+
+Outliers:
+- Sudden 200% pineapple sales in Kigali during October 2024
+- Huye's 15% lower average transaction level persisted in all seasons.
+- There was an unexpected avocado shortage in Q3 affecting the sales in Kigali.
+
+2. Diagnostic Analysis
+
+Causes:
+- Regional climate differences which affects fruit growth.
+- Harvesting seasons create natural supply fluctuations.
+- VIP customers' purchasing patterns take a lot of order volumes.
+- Market expansion initiatives in Muhanga attracted new customers.
+
+Influencing Factors:
+- Cultural preferences and traditional cooking patterns in regions.
+- Weather conditions impacts purchasing behavior.
+- Economic conditions affect spending capacity of clients.
+
+Comparisons:
+- The region of Kigali generates 45% of total revenue with a customer base of only 35%.
+- Top quartile customers spend 4 times more than the customers in the bottom one.
+- Constant customers show 3 times higher transactions than one-time customers.
+- Urban and rural purchasing patterns have diffrent season variations.
+
+3. Prescriptive Analysis
+
+Inventory Actions:
+- Increase 25% on avocado stock in Kigali during peak season.
+- Establish a mango inventory in Huye by 30% for Q2 customers demand.
+- Use the just-in-time ordering method to avoid waste by atleast 15%.
+
+Marketing Strategies:
+- Launch exclusive VIP program for VIP customers.
+- Execute targeted regional campaigns.
+- Give loyalty rewards to high-value clients to ensure retention.
+
+Business Decisions:
+- Expand capitalising of Muhanga operations by 8% monthly growth rate.
+- Establish supplier partnerships in Huye.
+- Create dashboard for inventory analytics to ensure quick decision making.
+
 
 
 
 References:
+
+
+
+
+
+
+
+
 
 
 
