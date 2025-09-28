@@ -2,10 +2,12 @@ SELECT
  region,
  sale_month,
  monthly_sales,
+ -- LAG: Access the data of the sales of the previous month for comparing
  LAG(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
  ) as prev_month_sales,
+ -- LEAD: Access the data of the sales of the next month for forecasting
  LEAD(monthly_sales, 1) OVER (
  PARTITION BY region
  ORDER BY sale_month
@@ -40,3 +42,10 @@ FROM (
  GROUP BY c.region, EXTRACT(MONTH FROM sale_date)
 ) region_monthly_sales
 ORDER BY region, sale_month;
+
+-- Interpretation:
+-- 1. Identify seasonal patterns and regional growth patterns
+-- 2. Forecast inventory needs based on growth paths  
+-- 3. Allocate marketing resources to regions with higher growth
+-- 4. Detect early signs of regions declining 
+-- 5. Compare regional performance and company's averages
