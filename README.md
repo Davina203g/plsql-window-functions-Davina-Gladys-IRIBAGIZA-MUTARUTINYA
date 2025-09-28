@@ -24,15 +24,17 @@ Identify highest selling fruit in each region for each quarter to optmise invent
 
 Databse schema:
 
+   Customers                   Transactions                   Products
+| customer_id (PK)|1 ----- M| transaction_id (PK)|M ------1| product_id (PK)|
+| name            |         | customer_id (FK)   |         | name           |
+| region          |         | product_id (FK)    |         | category       |
+|                 |         | sale_date          |         | unit_price     |
+|                 |         | quantity           |         |                |
+|                 |         | total_amount       |         |                |
 
-
-
-
-
-
-
-
-    
+Key relationships: 
+Customers - Transactions 1:M
+Products - Transactions M:1                          
 
 Functions' queries:
 1. Ranking functions:
