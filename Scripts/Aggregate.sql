@@ -24,5 +24,7 @@ FROM (
     GROUP BY EXTRACT(YEAR FROM sale_date), EXTRACT(MONTH FROM sale_date))
 ORDER BY sale_year, sale_month;
 --INTERPRETATION:
---The functions help to create an understandable view of sales performance through multiple time-based perspectives,
---which influences decison making 
+--The running totals show how sales accumulate in the year, which is useful for checking overall growth. 
+--The moving averages help smoothen seasonal ups and downs. 
+--For example, if sales fall in June but rise again in July, the 3-month moving average shows the general trend not just the fall. 
+--This makes it easier to plan ahead.
